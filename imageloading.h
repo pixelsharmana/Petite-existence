@@ -7,7 +7,6 @@ unsigned int width;
 unsigned int height;
 };
 
-//image finalImageLoading(std::string);
 void pasteImage(image inputImage);
 void movePasteImage(image inputImage,double,double);
 void movePartialPasteImage(image inputImage,int,int,unsigned int,unsigned int);

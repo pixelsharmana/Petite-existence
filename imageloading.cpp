@@ -1,15 +1,10 @@
 #include <gl/gl.h>
-#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
-//#include "lodepng.h"
 
 ///How to use this?
-//Well, make
-//image myImage=finalImageLoading("someFile.png);
-//To paste the image,
-//glDrawPixels(myImage.width,myImage.height,GL_RGBA,GL_UNSIGNED_BYTE, &myImage.data[0]);}
+//Well, I dunno lol
 
 struct image{
 std::vector<unsigned char> data;
@@ -17,11 +12,6 @@ unsigned int width;
 unsigned int height;
 };
 
-/*image finalImageLoading(std::string name){
-    image outputImage;
-    lodepng::decode(outputImage.data, outputImage.width, outputImage.height, name);
-    return outputImage;
-}*/
 
 void pasteImage(image inputImage){
 glDrawPixels(inputImage.width,inputImage.height,GL_RGBA,GL_UNSIGNED_BYTE, &inputImage.data[0]);

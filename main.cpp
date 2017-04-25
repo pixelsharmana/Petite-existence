@@ -59,15 +59,19 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
     ,{' ',charSpace}};
     std::vector<unit> unitsList;
     int cursorPos=30;
-    enum class MenuState {MASTERMENU, NEWGAME, LOADGAME, CREDITS, BONUS, QUIT};
+    enum class MenuState {MASTERMENU, NEWGAME, CREDITS, BONUS, QUIT};
     MenuState menuState=MenuState::MASTERMENU;
+                    unitsList.push_back(unit("john john", 0, 0, 0, {&mainCharacterDown[0],&mainCharacterDownLeft[0],&mainCharacterDownRight[0],
+                                                                &mainCharacterLeftRest[0],&mainCharacterLeftActive[0],&mainCharacterUp[0],
+                                                                &mainCharacterUpLeft[0],&mainCharacterUpRight[0],&mainCharacterRightRest[0],
+                                                                &mainCharacterRightActive[0]}));
     if (!RegisterClassEx(&wcex))
         return 0;
 
     //Create main window
     hwnd = CreateWindowEx(0,
                           "If you see this something has gone wrong",
-                          "Some slime shit",
+                          "Don't close this window or my universe will end",
                           WS_OVERLAPPEDWINDOW,
                           CW_USEDEFAULT,
                           CW_USEDEFAULT,
@@ -108,45 +112,51 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,i
             glRasterPos2d(-1,-1);
 
             if(menuState==MenuState::MASTERMENU){
-                if(sKeyDown == TRUE/* && counter%timerLength==0*/){
+                if(sKeyDown == TRUE && counter%timerLength==0){
                     cursorPos-=10;
-                    if(cursorPos==-20){cursorPos=30;}
+                    if(cursorPos==-10){cursorPos=30;}
                 }
-                else if(wKeyDown == TRUE/* && counter%timerLength==0*/){
+                else if(wKeyDown == TRUE && counter%timerLength==0){
                     cursorPos+=10;
-                    if(cursorPos==40){cursorPos=-10;}
+                    if(cursorPos==40){cursorPos=0;}
                 }
-                else if(returnKeyDown == TRUE && cursorPos==10){
+                else if(returnKeyDown == TRUE && cursorPos==20){
                     menuState=MenuState::CREDITS;
                 }
-                else if(returnKeyDown == TRUE && cursorPos==-10){
+                else if(returnKeyDown == TRUE && cursorPos==0){
                     PostQuitMessage(0);
                 }
                 else if (returnKeyDown == TRUE && cursorPos==30){
                     menuState=MenuState::NEWGAME;
                 }
+                else if (returnKeyDown == TRUE && cursorPos==10){
+                    menuState=MenuState::BONUS;
+                }
                 writeText("the slime master", letters, -45, 60);
                 writeText("new game", letters,-45,30);
-                writeText("load game", letters,-45,20);
-                writeText("credits", letters,-45,10);
-                writeText("bonus", letters,-45,0);
-                writeText("quit", letters,-45,-10);
+                writeText("credits", letters,-45,20);
+                writeText("bonus", letters,-45,10);
+                writeText("quit", letters,-45,0);
                 writeText(">", letters,-50,cursorPos);
             }
             else if(menuState==MenuState::CREDITS){
-                writeText("made by pixel sharmana", letters,-75,80);
+                writeText("this game has no author", letters,-75,80);
+                writeText("strange isnt it?", letters,-75,70);
+                if(returnKeyDown == TRUE/* && counter%timerLength*2==0*/){menuState=MenuState::MASTERMENU;}
+            }
+            else if(menuState==MenuState::BONUS){
+                writeText("avdokvmbpdggvphzhzdgcvx",letters,-75,80);
                 if(returnKeyDown == TRUE/* && counter%timerLength*2==0*/){menuState=MenuState::MASTERMENU;}
             }
 
             else if(menuState==MenuState::NEWGAME){
                 //0 Down, 1 Down Left, 2 Down Right, 3 Left Rest, 4 Left Active, 5 Up, 6 Up Left, 7 Up Right, 8 Right Rest, 9 Right Active
-                unitsList.push_back(unit("john john", 0, 0, 0, {&mainCharacterDown[0],&mainCharacterDownLeft[0],&mainCharacterDownRight[0],
-                                                                &mainCharacterLeftRest[0],&mainCharacterLeftActive[0],&mainCharacterUp[0],
-                                                                &mainCharacterUpLeft[0],&mainCharacterUpRight[0],&mainCharacterRightRest[0],
-                                                                &mainCharacterRightActive[0]}));
+
                 unitsList[0].draw();
-                if(counter%500==0){unitsList[0].state++;}
-                if(unitsList[0].state==10){unitsList[0].state=0;}
+                if(wKeyDown==TRUE){unitsList[0].state=5;}
+                else if(dKeyDown==TRUE){unitsList[0].state=3;}
+                else if(sKeyDown==TRUE){unitsList[0].state=0;}
+                else if(aKeyDown==TRUE){unitsList[0].state=8;}
             }
 
             glRasterPos2d(-1,-1);
