@@ -1,7 +1,7 @@
 # Petite-existence
 For ludum dare #38. Theme : A small world
 
-This is the source code. Do whatever. It's yours now. Who ever reads this last is the creator.
+This is the source code. Do whatever. It's yours now. Whoever reads this last is the creator.
 
 # Some details
 
